@@ -1,0 +1,12 @@
+documentation_complete: true
+
+title: 'Set Enterprise Application to travel mode'
+
+description: |-
+    Configure the Enterprise Application to travel mode.
+
+rationale: |-
+    The travel mode enables optimizes the application to work outside the intranet,
+    and enables extra security features.
+
+severity: medium

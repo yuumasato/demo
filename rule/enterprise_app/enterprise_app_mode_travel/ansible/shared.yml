@@ -1,0 +1,10 @@
+# platform = multi_platform_all
+
+- name: "Set Enterprise Applicaton to travel mode"
+  lineinfile:
+    dest: /etc/enterprise_app/app.conf
+    state: present
+    line: "mode travel"
+  tags:
+    @ANSIBLE_TAGS@
+  @ANSIBLE_ENSURE_PLATFORM@
