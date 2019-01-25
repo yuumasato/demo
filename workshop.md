@@ -73,3 +73,49 @@ Then, you create a directory that will define the rule's ID with optional files 
 * `check/shared.xml` or `check/<product>.xml`: OVAL definitions that check whether the rule is satisfied. The `shared` basename indicates that it applies to all products, whereas you can have one or more specific `.xml` names for individual products.
 * `bash/shared.sh` or product-specific `.sh`: Bash remediation, i.e. a script that makes the incompliant system compliant, and that ideally doesn't modify a system that is compliant already (i.e. the script is idempotent).
 * `ansible/shared.yml` or product-specific `.yml`: Ansible task, i.e. a snippet that makes the incompliant system compliant. Typical Ansible tasks are idempotent by design.
+
+
+## Testing a profile
+
+For that, you need either VM or a container that you can connect to as root with SSH without having to manually enter a password.
+Here, we describe a VM-based test - you therefore need a libvirt-based Fedora VM.
+Go to the `tests` subdirectory and execute the `test_suite.py` script.
+
+You need to specify the VM parameters, datastream parameters, and of course the profile you want to test.
+For example:
+
+```
+python3 test_suite.py profile --datastream ../build/ssg-fedora-ds.xml --libvirt qemu:///session my_fedora_vm --xccdf-id scap_org.open-scap_cref_ssg-fedora-xccdf-1.2.xml travel
+```
+
+where these options are likely to apply to everybody:
+
+* `../build/ssg-fedora-ds.xml` is path to the datastream. The component we are interested in has an internal ID of `scap_org.open-scap_cref_ssg-fedora-xccdf-1.2.xml`.
+  There may be multiple components of the datastream, so we need to specify this, but this is valid for Fedora datastreams produced by the ComplianceAsCode/content project.
+* `qemu:///session` is the libvirt backend, and you are liekly to use that one depending on how have you created the VM.
+  The alternative backend may be `qemu:///system`.
+
+these may differ:
+
+* `my_fedora_vm` is name (a.k.a. domain) of the VM.
+* `travel` is name of the profile to test.
+
+Results of the test are displayed to the console, but if you open the test log directory, you will be able to find nice profile scanning reports.
+
+There will be an initial scan, a scan coupled with execution of remediation scripts, and finally a final scan, i.e. scan after remediation.
+Although the initial scan may exhibit multiple failiures, the final scan should have rules that have remediations fixed.
+
+
+## Testing a rule
+
+This is similar to testing a profile.
+However, testing a rule is more complex - the test suite executes tests of rules whose ID match the given string, and a rule may be tested under multiple scenarios.
+
+The typical command looks like this:
+
+```
+python3 test_suite.py rule --datastream ../build/ssg-fedora-ds.xml --libvirt qemu:///session my_fedora_vm --xccdf-id scap_org.open-scap_cref_ssg-fedora-xccdf-1.2.xml --dontclean my_rule_id
+```
+
+The `--donclean` option keeps HTML reports for each scenario in the test log directory.
+You can also use the `--debug` option to pause the test execution whenever a scenario fails unexpectedly, so you can go to the VM and see for yourself what's going on.
