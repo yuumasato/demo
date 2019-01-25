@@ -31,7 +31,7 @@
          - equals
          - greater than
          - less than
-         - patter match
+         - pattern match
   -->
   <ind:textfilecontent54_object id="object_RULE_ID" comment="OBJECT COMMENT" version="1">
     <ind:filepath>FILEPATH</ind:filepath>
