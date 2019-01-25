@@ -1,0 +1,52 @@
+<def-group>
+
+  <definition class="compliance" id="RULE_ID" version="1">
+
+    <metadata>
+      <title>CHECK TITLE</title>
+      <affected family="unix">
+        <platform>multi_platform_all</platform>
+      </affected>
+      <description>CHECK COMMENT</description>
+    </metadata>
+
+    <criteria>
+      <criterion test_ref="test_RULE_ID" />
+    </criteria>
+
+  </definition>
+
+  <!-- Definition of the test
+       check="all" all objects found must conform to the state
+       check_existence="all_exist" means that all objects defined must exist
+  -->
+  <ind:textfilecontent54_test comment="TEST COMMENT" id="test_RULE_ID" version=" 1"
+      check="all" check_existence="all_exist" >
+    <ind:object object_ref="object_RULE_ID" />
+    <ind:state state_ref="state_RULE_ID" />
+  </ind:textfilecontent54_test>
+
+  <!-- Object to evaluate
+       Common operations: 
+         - equals
+         - greater than
+         - less than
+         - patter match
+  -->
+  <ind:textfilecontent54_object id="object_RULE_ID" comment="OBJECT COMMENT" version="1">
+    <ind:filepath>FILEPATH</ind:filepath>
+    <ind:pattern operation=""></ind:pattern>
+    <ind:instance datatype="int" operation="greater than or equal">1</ind:instance>
+  </ind:textfilecontent54_object>
+
+  <!-- State to which the object should conform
+       Common datatypes: 
+         - int
+         - string
+         - boolean
+  -->
+  <ind:textfilecontent54_state id="state_RULE_ID" version="1">
+    <ind:subexpression operation="" datatype=""></ind:subexpression>
+  </ind:textfilecontent54_state>
+
+</def-group>

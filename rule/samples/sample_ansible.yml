@@ -1,0 +1,10 @@
+# platform = multi_platform_all
+
+- name: "Sample Ansible fix"
+  lineinfile:
+    dest: /tmp/hello_world.txt
+    state: present
+    line: "Hello world!"
+  tags:
+    @ANSIBLE_TAGS@
+  @ANSIBLE_ENSURE_PLATFORM@

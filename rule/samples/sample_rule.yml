@@ -1,0 +1,17 @@
+documentation_complete: true
+
+title: ''
+
+description: Rule description.
+
+# |- Is used for multiline text
+rationale: |-
+    This is a multiine description,
+    for sample rule
+
+# Severity can be:
+# - unknown
+# - low
+# - medium
+# - high
+severity: Rule severtity
